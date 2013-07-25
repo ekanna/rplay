@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang='en-GB'>
+<head>
+    <meta charset='utf-8'>
+    <title>Understanding Ractive</title>
+</head>
+<body>
+   <h3>Ractive</h3>
+	
+	<div id='container'></div>
+	
+	<script id='myTemplate' type='text/ractive'>
+		<h1>{{greeting}} {{name}}!</h1>
+	</script>
+	
+	<script src='vendor/Ractive.js'></script>
+	<script>
+		var ractive = new Ractive({
+			el: '#container',
+			template: '#myTemplate',
+			data: {greeting: 'Hello', name: 'Koti'}
+		});
+	</script>
+</body>
+</html>
