@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang='en-GB'>
+<head>
+    <meta charset='utf-8'>
+    <title>Understanding Ractive</title>
+	 <link href="vendor/bootstrap.css" rel="stylesheet">
+</head>
+<body>
+   <h3>Ractive</h3>
+	
+	<div id='container'></div>
+	
+	<script id='myTemplate' type='text/ractive'>
+		<table class='table'>
+			<thead>
+			<tr>
+				<th>Product</th>
+				<th>Amount</th>
+				<th>Color</th>
+			</tr>
+			</thead>
+			<tbody>
+			{{#products}}
+				<tr>
+					<td>{{product}}</td>
+					<td>{{amount}}</td>
+					<td><div style='background-color: teal; width:{{(Math.round(amount / sum() * 100))}}%;'>{{amount}}</div></td>
+				</tr>
+			{{/products}}
+			</tbody>
+		</table>
+	</script>
+	
+	<script src='vendor/Ractive.js'></script>
+	<script>
+		var data = [
+			{product: 'Light', amount: 1000},
+			{product: 'Bulb', amount: 2500},
+			{product: 'Tube', amount: 8000},
+			{product: 'Switch', amount: 9000}
+		];
+
+		var ractive = new Ractive({
+			el: '#container',
+			template: '#myTemplate',
+			data: {
+				products: data,
+				sum: function() {
+					var sum = 0;
+					data.forEach(function(o){
+						sum += o.amount
+					});
+					return sum
+				}
+			}
+		});
+	</script>
+</body>
+</html>

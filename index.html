@@ -2,24 +2,14 @@
 <html lang='en-GB'>
 <head>
     <meta charset='utf-8'>
-    <title>Understanding Ractive</title>
+    <title>Ractive Tuts</title>
+	 <link href="vendor/bootstrap.css" rel="stylesheet">
 </head>
 <body>
-   <h3>Ractive</h3>
-	
-	<div id='container'></div>
-	
-	<script id='myTemplate' type='text/ractive'>
-		<h1>{{greeting}} {{name}}!</h1>
-	</script>
-	
-	<script src='vendor/Ractive.js'></script>
-	<script>
-		var ractive = new Ractive({
-			el: '#container',
-			template: '#myTemplate',
-			data: {greeting: 'Hello', name: 'Koti'}
-		});
-	</script>
+   <h1>Ractive</h1>
+	<ol>
+		<li><a href="/hello.html">Hello</li>
+		<li><a href="/tablecolor.html">Table Color</li>
+	</ol>
 </body>
 </html>
