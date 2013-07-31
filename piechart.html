@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang='en-GB'>
+<head>
+    <meta charset='utf-8'>
+    <title>My first attemt at drawing Pie chart without using any charting libraries</title>
+</head>
+<body>
+   <h3>Ractive</h3>
+    <h3>My first attemt at drawing Pie chart without using any charting libraries</h3>
+	
+	<div id='container'></div>
+	
+	<script id='pieChart' type='text/ractive'>
+		<svg width='{{width}}' height='{{height}}'>
+			{{#sectors}}
+			<g class='sector' transform='translate({{(width/2)}}, {{(height/2)}})'>
+				<path fill='{{color}}' d='{{path}}'>
+				</path>
+			</g>
+			{{/sectors}}
+		</svg>
+	</script>
+	
+	<script src='vendor/Ractive.js'></script>
+	<script>
+		var bdata = [50,20,10,5] // business data
+		function sectors(bdata, r){
+			console.log(r);
+			var startAngle = 0
+			var endAngle = 2 * Math.PI // in radians
+			// convert bdata into radians
+			var k = (endAngle - startAngle)/bdata.reduce(function(p,n){return p + n})
+			var arcs = [];
+			bdata.forEach(function(d,i){
+				arcs[i] = {
+					startAngle: startAngle,
+					endAngle: startAngle += d * k,
+					data: d
+				}
+			});
+			
+			var colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728"]
+			//Convert arc angles into (x,y) points
+			var sectors = []
+			arcs.forEach(function(d, i){
+				var a0 = d.startAngle;
+				var a1 = d.endAngle;
+				var c0 = Math.cos(a0); // cos is for x
+				var s0 = Math.sin(a0); // sign is for y
+				var c1 = Math.cos(a1);
+				var s1 = Math.sin(a1);
+				sectors[i] = {
+					color:colors[i], 
+					path: "M" + r * c0 + "," + s0
+					+ "A" + r + "," + r + " 0 " + "0" + ",1 " + r * c1 + "," + r*s1
+					+ "L" + "0,0"
+					+ "Z"
+				}
+			});
+			return sectors;
+
+		}
+		var ractive = new Ractive({
+			el: '#container',
+			template: '#pieChart',
+			data: {
+				width: 500,
+				height: 500,
+				//d: 'M0 -250 A250 250 0 0 1 -40 246 L0 0 Z'
+				sectors: sectors(bdata, 250) 
+			}
+		});
+	</script>
+</body>
+</html>
